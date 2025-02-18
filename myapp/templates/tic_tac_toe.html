@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe!</title>
-     <style>
+    <style>
         #tic-tac-toe-game {
             padding: 1rem;
             display: flex;
@@ -55,47 +55,45 @@
         </div>
     </div>
 </body>
-</html>
-
 <script>
-    const playButton = document.querySelector("#play-btn");
-    const gameContainer = document.querySelector("#tic-tac-toe-game");
-    
-    const board = [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""]
-    ];
+const playButton = document.querySelector("#play-btn");
+const gameContainer = document.querySelector("#tic-tac-toe-game");
 
-    let currentPlayer = "X";
+const board = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
+];
 
-    function getCellElement(row, col) {
-        return document.querySelector(`#col-${row}${String.fromCharCode(97 + col)}`); // a, b, c mapping
+let currentPlayer = "X";
+
+function getCellElement(row, col) {
+    return document.querySelector(`#col-${row}${String.fromCharCode(97 + col)}`); // a, b, c mapping
+}
+
+function updateBoard(row, col) {
+    if (board[row][col] === "") {
+        board[row][col] = currentPlayer;
+        getCellElement(row, col).textContent = currentPlayer;
+        
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
+}
 
-    function updateBoard(row, col) {
-        if (board[row][col] === "") {
-            board[row][col] = currentPlayer;
-            getCellElement(row, col).textContent = currentPlayer;
-            
-            currentPlayer = currentPlayer === "X" ? "O" : "X";
+function initializeGame() {
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            const cell = getCellElement(row, col);
+            cell.addEventListener("click", () => updateBoard(row, col));
         }
     }
+}
 
-    function initializeGame() {
-        for (let row = 0; row < 3; row++) {
-            for (let col = 0; col < 3; col++) {
-                const cell = getCellElement(row, col);
-                cell.addEventListener("click", () => updateBoard(row, col));
-            }
-        }
-    }
-
-    playButton.addEventListener("click", () => {
-        console.log("Button clicked!");
-        playButton.textContent = "Playing Tic Tac Toe...";
-        playButton.disabled = true;
-        gameContainer.hidden = false;
-        initializeGame();
-    });
+playButton.addEventListener("click", () => {
+    console.log("Button clicked!");
+    playButton.textContent = "Playing Tic Tac Toe...";
+    playButton.disabled = true;
+    initializeGame();
+});
 </script>
+</html>
